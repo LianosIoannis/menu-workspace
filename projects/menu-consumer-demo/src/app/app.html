@@ -1,0 +1,9 @@
+<div class="h-screen w-screen bg-slate-100 flex items-start justify-center p-8">
+	<div class="w-80 h-160 shadow-lg">
+		<menu [menuData]="menuData" (onItemClicked)="itemClicked($event)" (onCloseClicked)="closeClicked()" (onLogoutClicked)="logoutClicked()" (onProfileClicked)="profileClicked()"></menu>
+	</div>
+</div>
+
+<div style="position:fixed;right:12px;bottom:12px;background:#111;color:#fff;padding:8px;border-radius:6px;font-size:12px;">
+	Last clicked: {{ lastClicked() }}
+</div>

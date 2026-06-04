@@ -6,6 +6,9 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
+    "paths": {
+      "menu-lib": ["./dist/menu-lib"]
+    },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "isolatedModules": true,
@@ -19,5 +22,19 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/menu-lib/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/menu-lib/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/menu-consumer-demo/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/menu-consumer-demo/tsconfig.spec.json"
+    }
+  ]
 }
