@@ -1,5 +1,5 @@
 import { Component, signal } from "@angular/core";
-import { Menu } from "menu-lib";
+import { Menu, type MenuItemModel } from "menu-lib";
 import { menuData } from "../menuData";
 
 @Component({
@@ -15,9 +15,9 @@ export class App {
 
 	protected readonly lastClicked = signal<string | null>(null);
 
-	itemClicked(item: any) {
+	itemClicked(item: MenuItemModel) {
 		console.log("itemClicked", item);
-		this.lastClicked.set(item?.text ?? JSON.stringify(item));
+		this.lastClicked.set(item.text);
 	}
 
 	closeClicked() {

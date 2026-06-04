@@ -9,6 +9,9 @@ import type { MenuItemModel } from "./menu-item/menu-item.model";
 	selector: "menu",
 	imports: [MenuItem, FormsModule, FontAwesomeModule],
 	templateUrl: "./menu.html",
+	host: {
+		class: "block h-full min-h-0 w-full",
+	},
 })
 export class Menu {
 	menuData = input<MenuDataModel>({} as MenuDataModel);
