@@ -9,6 +9,7 @@ export const menuData: MenuDataModel = {
 			text: "Partners",
 			icon: "user-friends",
 			iconColor: "#818cf8",
+			order: 9990,
 			isFolder: true,
 			items: [
 				{
@@ -16,6 +17,7 @@ export const menuData: MenuDataModel = {
 					text: "Suppliers",
 					icon: "truck-loading",
 					iconColor: "#fbbf24",
+					order: 9980,
 					isFolder: true,
 					items: [
 						{
@@ -23,6 +25,7 @@ export const menuData: MenuDataModel = {
 							text: "Supplier List",
 							icon: "list",
 							iconColor: "#94a3b8",
+							order: 9970,
 							isFolder: false,
 							items: [],
 						},
@@ -31,6 +34,7 @@ export const menuData: MenuDataModel = {
 							text: "Supplier Categories",
 							icon: "tags",
 							iconColor: "#f472b6",
+							order: 9960,
 							isFolder: false,
 							items: [],
 						},
@@ -39,6 +43,7 @@ export const menuData: MenuDataModel = {
 							text: "Contracts",
 							icon: "file-signature",
 							iconColor: "#a78bfa",
+							order: 9950,
 							isFolder: true,
 							items: [
 								{
@@ -46,6 +51,7 @@ export const menuData: MenuDataModel = {
 									text: "Active Contracts",
 									icon: "check-circle",
 									iconColor: "#4ade80",
+									order: 9940,
 									isFolder: false,
 									items: [],
 								},
@@ -54,6 +60,7 @@ export const menuData: MenuDataModel = {
 									text: "Expired Contracts",
 									icon: "times-circle",
 									iconColor: "#f87171",
+									order: 9930,
 									isFolder: false,
 									items: [],
 								},
@@ -66,6 +73,7 @@ export const menuData: MenuDataModel = {
 					text: "Customers",
 					icon: "user-tag",
 					iconColor: "#2dd4bf",
+					order: 9920,
 					isFolder: true,
 					items: [
 						{
@@ -73,6 +81,7 @@ export const menuData: MenuDataModel = {
 							text: "Customer List",
 							icon: "address-book",
 							iconColor: "#60a5fa",
+							order: 9910,
 							isFolder: false,
 							items: [],
 						},
@@ -81,6 +90,7 @@ export const menuData: MenuDataModel = {
 							text: "Customer Groups",
 							icon: "users",
 							iconColor: "#22d3ee",
+							order: 9900,
 							isFolder: false,
 							items: [],
 						},
@@ -89,6 +99,7 @@ export const menuData: MenuDataModel = {
 							text: "Pricing",
 							icon: "money-bill-wave",
 							iconColor: "#34d399",
+							order: 9890,
 							isFolder: true,
 							items: [
 								{
@@ -96,6 +107,7 @@ export const menuData: MenuDataModel = {
 									text: "Price Lists",
 									icon: "clipboard-list",
 									iconColor: "#a3e635",
+									order: 9880,
 									isFolder: false,
 									items: [],
 								},
@@ -104,6 +116,7 @@ export const menuData: MenuDataModel = {
 									text: "Discount Rules",
 									icon: "percent",
 									iconColor: "#fb923c",
+									order: 9870,
 									isFolder: false,
 									items: [],
 								},
@@ -118,6 +131,7 @@ export const menuData: MenuDataModel = {
 			text: "Products",
 			icon: "box",
 			iconColor: "#fb923c",
+			order: 9860,
 			isFolder: true,
 			items: [
 				{
@@ -125,6 +139,7 @@ export const menuData: MenuDataModel = {
 					text: "Raw Materials",
 					icon: "boxes",
 					iconColor: "#a8a29e",
+					order: 9850,
 					isFolder: true,
 					items: [
 						{
@@ -132,6 +147,7 @@ export const menuData: MenuDataModel = {
 							text: "Chemicals",
 							icon: "vial",
 							iconColor: "#c084fc",
+							order: 9840,
 							isFolder: false,
 							items: [],
 						},
@@ -140,6 +156,7 @@ export const menuData: MenuDataModel = {
 							text: "Packaging",
 							icon: "archive",
 							iconColor: "#facc15",
+							order: 9830,
 							isFolder: true,
 							items: [
 								{
@@ -147,6 +164,7 @@ export const menuData: MenuDataModel = {
 									text: "Bottles",
 									icon: "wine-bottle",
 									iconColor: "#38bdf8",
+									order: 9820,
 									isFolder: false,
 									items: [],
 								},
@@ -155,6 +173,7 @@ export const menuData: MenuDataModel = {
 									text: "Labels",
 									icon: "tag",
 									iconColor: "#fb7185",
+									order: 9810,
 									isFolder: false,
 									items: [],
 								},
@@ -163,6 +182,7 @@ export const menuData: MenuDataModel = {
 									text: "Cartons",
 									icon: "box-open",
 									iconColor: "#fbbf24",
+									order: 9800,
 									isFolder: false,
 									items: [],
 								},
@@ -175,6 +195,7 @@ export const menuData: MenuDataModel = {
 					text: "Finished Products",
 					icon: "box-open",
 					iconColor: "#4ade80",
+					order: 9790,
 					isFolder: true,
 					items: [
 						{
@@ -182,6 +203,7 @@ export const menuData: MenuDataModel = {
 							text: "Standard Products",
 							icon: "cube",
 							iconColor: "#60a5fa",
+							order: 9780,
 							isFolder: false,
 							items: [],
 						},
@@ -190,6 +212,7 @@ export const menuData: MenuDataModel = {
 							text: "Special Products",
 							icon: "star",
 							iconColor: "#e879f9",
+							order: 9770,
 							isFolder: false,
 							items: [],
 						},
@@ -198,6 +221,7 @@ export const menuData: MenuDataModel = {
 							text: "Product Families",
 							icon: "layer-group",
 							iconColor: "#818cf8",
+							order: 9760,
 							isFolder: true,
 							items: [
 								{
@@ -205,6 +229,7 @@ export const menuData: MenuDataModel = {
 									text: "Cosmetics",
 									icon: "spa",
 									iconColor: "#f472b6",
+									order: 9750,
 									isFolder: false,
 									items: [],
 								},
@@ -213,6 +238,7 @@ export const menuData: MenuDataModel = {
 									text: "Detergents",
 									icon: "soap",
 									iconColor: "#22d3ee",
+									order: 9740,
 									isFolder: false,
 									items: [],
 								},
@@ -227,6 +253,7 @@ export const menuData: MenuDataModel = {
 			text: "Documents",
 			icon: "file-invoice",
 			iconColor: "#fbbf24",
+			order: 9730,
 			isFolder: true,
 			items: [
 				{
@@ -234,6 +261,7 @@ export const menuData: MenuDataModel = {
 					text: "Purchase",
 					icon: "shopping-cart",
 					iconColor: "#4ade80",
+					order: 9720,
 					isFolder: true,
 					items: [
 						{
@@ -241,6 +269,7 @@ export const menuData: MenuDataModel = {
 							text: "Purchase Orders",
 							icon: "file-alt",
 							iconColor: "#34d399",
+							order: 9710,
 							isFolder: false,
 							items: [],
 						},
@@ -249,6 +278,7 @@ export const menuData: MenuDataModel = {
 							text: "Goods Receipts",
 							icon: "dolly",
 							iconColor: "#a3e635",
+							order: 9700,
 							isFolder: false,
 							items: [],
 						},
@@ -257,6 +287,7 @@ export const menuData: MenuDataModel = {
 							text: "Supplier Invoices",
 							icon: "file-invoice-dollar",
 							iconColor: "#facc15",
+							order: 9690,
 							isFolder: false,
 							items: [],
 						},
@@ -267,6 +298,7 @@ export const menuData: MenuDataModel = {
 					text: "Sale",
 					icon: "cash-register",
 					iconColor: "#60a5fa",
+					order: 9680,
 					isFolder: true,
 					items: [
 						{
@@ -274,6 +306,7 @@ export const menuData: MenuDataModel = {
 							text: "Sales Orders",
 							icon: "receipt",
 							iconColor: "#38bdf8",
+							order: 9670,
 							isFolder: false,
 							items: [],
 						},
@@ -282,6 +315,7 @@ export const menuData: MenuDataModel = {
 							text: "Delivery Notes",
 							icon: "truck",
 							iconColor: "#818cf8",
+							order: 9660,
 							isFolder: false,
 							items: [],
 						},
@@ -290,6 +324,7 @@ export const menuData: MenuDataModel = {
 							text: "Customer Invoices",
 							icon: "file-invoice-dollar",
 							iconColor: "#22d3ee",
+							order: 9650,
 							isFolder: false,
 							items: [],
 						},
@@ -300,6 +335,7 @@ export const menuData: MenuDataModel = {
 					text: "Production",
 					icon: "industry",
 					iconColor: "#c084fc",
+					order: 9640,
 					isFolder: true,
 					items: [
 						{
@@ -307,6 +343,7 @@ export const menuData: MenuDataModel = {
 							text: "Production Orders",
 							icon: "tasks",
 							iconColor: "#a78bfa",
+							order: 9630,
 							isFolder: false,
 							items: [],
 						},
@@ -315,6 +352,7 @@ export const menuData: MenuDataModel = {
 							text: "Batch Records",
 							icon: "clipboard-check",
 							iconColor: "#e879f9",
+							order: 9620,
 							isFolder: false,
 							items: [],
 						},
@@ -323,6 +361,7 @@ export const menuData: MenuDataModel = {
 							text: "Work Centers",
 							icon: "cogs",
 							iconColor: "#94a3b8",
+							order: 9610,
 							isFolder: true,
 							items: [
 								{
@@ -330,6 +369,7 @@ export const menuData: MenuDataModel = {
 									text: "Mixing",
 									icon: "blender",
 									iconColor: "#fb923c",
+									order: 9600,
 									isFolder: false,
 									items: [],
 								},
@@ -338,6 +378,7 @@ export const menuData: MenuDataModel = {
 									text: "Filling",
 									icon: "fill-drip",
 									iconColor: "#2dd4bf",
+									order: 9590,
 									isFolder: false,
 									items: [],
 								},
@@ -346,6 +387,7 @@ export const menuData: MenuDataModel = {
 									text: "Packing",
 									icon: "boxes",
 									iconColor: "#fbbf24",
+									order: 9580,
 									isFolder: false,
 									items: [],
 								},
@@ -358,6 +400,7 @@ export const menuData: MenuDataModel = {
 					text: "Adjustment",
 					icon: "sliders-h",
 					iconColor: "#fb7185",
+					order: 9570,
 					isFolder: true,
 					items: [
 						{
@@ -365,6 +408,7 @@ export const menuData: MenuDataModel = {
 							text: "Stock Adjustments",
 							icon: "warehouse",
 							iconColor: "#f87171",
+							order: 9560,
 							isFolder: false,
 							items: [],
 						},
@@ -373,6 +417,7 @@ export const menuData: MenuDataModel = {
 							text: "Lot Corrections",
 							icon: "edit",
 							iconColor: "#fb923c",
+							order: 9550,
 							isFolder: false,
 							items: [],
 						},
@@ -385,6 +430,7 @@ export const menuData: MenuDataModel = {
 			text: "Laboratory",
 			icon: "flask",
 			iconColor: "#22d3ee",
+			order: 9540,
 			isFolder: true,
 			items: [
 				{
@@ -392,6 +438,7 @@ export const menuData: MenuDataModel = {
 					text: "Recipes",
 					icon: "book-open",
 					iconColor: "#a3e635",
+					order: 9530,
 					isFolder: true,
 					items: [
 						{
@@ -399,6 +446,7 @@ export const menuData: MenuDataModel = {
 							text: "Active Recipes",
 							icon: "check",
 							iconColor: "#4ade80",
+							order: 9520,
 							isFolder: false,
 							items: [],
 						},
@@ -407,6 +455,7 @@ export const menuData: MenuDataModel = {
 							text: "Draft Recipes",
 							icon: "pencil-alt",
 							iconColor: "#facc15",
+							order: 9510,
 							isFolder: false,
 							items: [],
 						},
@@ -415,6 +464,7 @@ export const menuData: MenuDataModel = {
 							text: "Archived Recipes",
 							icon: "archive",
 							iconColor: "#94a3b8",
+							order: 9500,
 							isFolder: false,
 							items: [],
 						},
@@ -425,6 +475,7 @@ export const menuData: MenuDataModel = {
 					text: "Quality Control",
 					icon: "microscope",
 					iconColor: "#c084fc",
+					order: 9490,
 					isFolder: true,
 					items: [
 						{
@@ -432,6 +483,7 @@ export const menuData: MenuDataModel = {
 							text: "Test Methods",
 							icon: "clipboard-list",
 							iconColor: "#60a5fa",
+							order: 9480,
 							isFolder: false,
 							items: [],
 						},
@@ -440,6 +492,7 @@ export const menuData: MenuDataModel = {
 							text: "Sample Results",
 							icon: "poll",
 							iconColor: "#2dd4bf",
+							order: 9470,
 							isFolder: false,
 							items: [],
 						},
@@ -448,6 +501,7 @@ export const menuData: MenuDataModel = {
 							text: "Non-Conformities",
 							icon: "exclamation-triangle",
 							iconColor: "#f87171",
+							order: 9460,
 							isFolder: false,
 							items: [],
 						},
@@ -460,6 +514,7 @@ export const menuData: MenuDataModel = {
 			text: "Reports",
 			icon: "chart-bar",
 			iconColor: "#34d399",
+			order: 9450,
 			isFolder: true,
 			items: [
 				{
@@ -467,6 +522,7 @@ export const menuData: MenuDataModel = {
 					text: "Inventory",
 					icon: "warehouse",
 					iconColor: "#facc15",
+					order: 9440,
 					isFolder: true,
 					items: [
 						{
@@ -474,6 +530,7 @@ export const menuData: MenuDataModel = {
 							text: "Lot Balance",
 							icon: "balance-scale",
 							iconColor: "#facc15",
+							order: 9430,
 							isFolder: false,
 							items: [],
 						},
@@ -482,6 +539,7 @@ export const menuData: MenuDataModel = {
 							text: "Stock Valuation",
 							icon: "coins",
 							iconColor: "#fbbf24",
+							order: 9420,
 							isFolder: false,
 							items: [],
 						},
@@ -492,6 +550,7 @@ export const menuData: MenuDataModel = {
 					text: "Traceability",
 					icon: "project-diagram",
 					iconColor: "#38bdf8",
+					order: 9410,
 					isFolder: true,
 					items: [
 						{
@@ -499,6 +558,7 @@ export const menuData: MenuDataModel = {
 							text: "Lot Trace",
 							icon: "route",
 							iconColor: "#38bdf8",
+							order: 9400,
 							isFolder: false,
 							items: [],
 						},
@@ -507,6 +567,7 @@ export const menuData: MenuDataModel = {
 							text: "Forward Trace",
 							icon: "arrow-right",
 							iconColor: "#4ade80",
+							order: 9390,
 							isFolder: false,
 							items: [],
 						},
@@ -515,6 +576,7 @@ export const menuData: MenuDataModel = {
 							text: "Backward Trace",
 							icon: "arrow-left",
 							iconColor: "#fb923c",
+							order: 9380,
 							isFolder: false,
 							items: [],
 						},
@@ -525,6 +587,7 @@ export const menuData: MenuDataModel = {
 					text: "Financial",
 					icon: "chart-line",
 					iconColor: "#34d399",
+					order: 9370,
 					isFolder: true,
 					items: [
 						{
@@ -532,6 +595,7 @@ export const menuData: MenuDataModel = {
 							text: "Sales Analysis",
 							icon: "chart-pie",
 							iconColor: "#60a5fa",
+							order: 9360,
 							isFolder: false,
 							items: [],
 						},
@@ -540,6 +604,7 @@ export const menuData: MenuDataModel = {
 							text: "Purchase Analysis",
 							icon: "chart-area",
 							iconColor: "#c084fc",
+							order: 9350,
 							isFolder: false,
 							items: [],
 						},
@@ -552,6 +617,7 @@ export const menuData: MenuDataModel = {
 			text: "Settings",
 			icon: "cog",
 			iconColor: "#94a3b8",
+			order: 9340,
 			isFolder: true,
 			items: [
 				{
@@ -559,6 +625,7 @@ export const menuData: MenuDataModel = {
 					text: "System",
 					icon: "server",
 					iconColor: "#9ca3af",
+					order: 9330,
 					isFolder: true,
 					items: [
 						{
@@ -566,6 +633,7 @@ export const menuData: MenuDataModel = {
 							text: "Users",
 							icon: "user-cog",
 							iconColor: "#818cf8",
+							order: 9320,
 							isFolder: false,
 							items: [],
 						},
@@ -574,6 +642,7 @@ export const menuData: MenuDataModel = {
 							text: "Roles",
 							icon: "user-shield",
 							iconColor: "#c084fc",
+							order: 9310,
 							isFolder: false,
 							items: [],
 						},
@@ -582,6 +651,7 @@ export const menuData: MenuDataModel = {
 							text: "Permissions",
 							icon: "key",
 							iconColor: "#facc15",
+							order: 9300,
 							isFolder: false,
 							items: [],
 						},
@@ -592,6 +662,7 @@ export const menuData: MenuDataModel = {
 					text: "Master Data",
 					icon: "database",
 					iconColor: "#60a5fa",
+					order: 9290,
 					isFolder: true,
 					items: [
 						{
@@ -599,6 +670,7 @@ export const menuData: MenuDataModel = {
 							text: "Units",
 							icon: "ruler",
 							iconColor: "#22d3ee",
+							order: 9280,
 							isFolder: false,
 							items: [],
 						},
@@ -607,6 +679,7 @@ export const menuData: MenuDataModel = {
 							text: "Tax Rates",
 							icon: "percent",
 							iconColor: "#4ade80",
+							order: 9270,
 							isFolder: false,
 							items: [],
 						},
@@ -615,6 +688,7 @@ export const menuData: MenuDataModel = {
 							text: "Currencies",
 							icon: "coins",
 							iconColor: "#fbbf24",
+							order: 9260,
 							isFolder: false,
 							items: [],
 						},

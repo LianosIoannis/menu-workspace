@@ -1,12 +1,14 @@
 {
-  "name": "menu-lib",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "^22.0.0",
-    "@angular/core": "^22.0.0"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "sideEffects": false
+	"name": "menu-lib",
+	"version": "0.0.1",
+	"peerDependencies": {
+		"@angular/common": "^22.0.0",
+		"@angular/core": "^22.0.0",
+		"@fortawesome/angular-fontawesome": "^4.0.0",
+		"@fortawesome/free-solid-svg-icons": "^7.2.0"
+	},
+	"dependencies": {
+		"tslib": "^2.3.0"
+	},
+	"sideEffects": false
 }

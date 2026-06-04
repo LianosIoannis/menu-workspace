@@ -3,6 +3,7 @@ export type MenuItemModel = {
 	text: string;
 	icon: string;
 	iconColor: string;
+	order?: number;
 	isFolder: boolean;
 	items: MenuItemModel[];
 };

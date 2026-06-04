@@ -23,6 +23,20 @@ export class Menu {
 	onLogoutClicked = output();
 	onProfileClicked = output();
 
+	private sortMenuItems(menuData: MenuItemModel[]): MenuItemModel[] {
+		return menuData
+			.map((menuItem, index) => ({ menuItem, index }))
+			.sort((a, b) => {
+				const orderDiff = (b.menuItem.order ?? Number.MIN_SAFE_INTEGER) - (a.menuItem.order ?? Number.MIN_SAFE_INTEGER);
+
+				return orderDiff || a.index - b.index;
+			})
+			.map(({ menuItem }) => ({
+				...menuItem,
+				items: menuItem.isFolder ? this.sortMenuItems(menuItem.items) : menuItem.items,
+			}));
+	}
+
 	menuDataFiltered(menuData: MenuItemModel[], filter: string) {
 		const filterToLowerCase = filter.toLowerCase();
 
@@ -67,5 +81,7 @@ export class Menu {
 		this.onProfileClicked.emit();
 	}
 
-	filteredItems = computed(() => this.menuDataFiltered(this.menuData().menuItems, this.filter()));
+	menuDataSorted = computed(() => this.sortMenuItems(this.menuData().menuItems));
+
+	filteredItems = computed(() => this.menuDataFiltered(this.menuDataSorted(), this.filter()));
 }
