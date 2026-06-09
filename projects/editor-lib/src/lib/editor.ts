@@ -17,6 +17,24 @@ export type editorLanguage = "javascript" | "typescript" | "sql" | "plaintext" |
 	selector: "editor",
 	imports: [],
 	templateUrl: "./editor.html",
+	host: {
+		class: "block min-h-96",
+	},
+	styles: [
+		`
+			:host {
+				display: block;
+				min-height: 24rem;
+			}
+
+			.editor-surface {
+				height: 100%;
+				min-height: 24rem;
+				overflow: hidden;
+				width: 100%;
+			}
+		`,
+	],
 })
 export class Editor implements AfterViewInit, OnDestroy {
 	editorRef = viewChild.required<ElementRef<HTMLDivElement>>("editorRef");
@@ -66,7 +84,44 @@ export class Editor implements AfterViewInit, OnDestroy {
 		await editor.getAction("editor.action.formatDocument")?.run();
 	};
 
+	initializeMonaco() {
+		window.MonacoEnvironment = {
+			getWorker: (_: string, label: string) => {
+				const workerMap: Record<string, Worker> = {
+					json: new Worker(new URL("monaco-editor/esm/vs/language/json/json.worker.js", import.meta.url), {
+						type: "module",
+					}),
+					css: new Worker(new URL("monaco-editor/esm/vs/language/css/css.worker.js", import.meta.url), {
+						type: "module",
+					}),
+					scss: new Worker(new URL("monaco-editor/esm/vs/language/css/css.worker.js", import.meta.url), {
+						type: "module",
+					}),
+					less: new Worker(new URL("monaco-editor/esm/vs/language/css/css.worker.js", import.meta.url), {
+						type: "module",
+					}),
+					html: new Worker(new URL("monaco-editor/esm/vs/language/html/html.worker.js", import.meta.url), {
+						type: "module",
+					}),
+					typescript: new Worker(new URL("monaco-editor/esm/vs/language/typescript/ts.worker.js", import.meta.url), {
+						type: "module",
+					}),
+					javascript: new Worker(new URL("monaco-editor/esm/vs/language/typescript/ts.worker.js", import.meta.url), {
+						type: "module",
+					}),
+				};
+
+				return (
+					workerMap[label] ??
+					new Worker(new URL("monaco-editor/esm/vs/editor/editor.worker.js", import.meta.url), { type: "module" })
+				);
+			},
+		};
+	}
+
 	ngAfterViewInit() {
+		this.initializeMonaco();
+
 		this.editor = monaco.editor.create(this.editorRef().nativeElement, {
 			value: this.value(),
 			language: this.language(),
