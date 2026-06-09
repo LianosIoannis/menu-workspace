@@ -7,6 +7,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "paths": {
+      "editor-lib": ["./dist/editor-lib"],
       "menu-lib": ["./dist/menu-lib"]
     },
     "noFallthroughCasesInSwitch": true,
@@ -35,6 +36,12 @@
     },
     {
       "path": "./projects/menu-consumer-demo/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/editor-lib/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/editor-lib/tsconfig.spec.json"
     }
   ]
 }
