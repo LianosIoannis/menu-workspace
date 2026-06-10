@@ -12,6 +12,7 @@ import type { MenuItemModel } from "./menu-item/menu-item.model";
 	host: {
 		class: "block h-full min-h-0 w-full",
 	},
+	styleUrl: "./menu.css",
 })
 export class Menu {
 	menuData = input<MenuDataModel>({} as MenuDataModel);

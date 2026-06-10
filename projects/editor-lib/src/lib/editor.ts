@@ -21,7 +21,8 @@ export type EditorLanguage = "javascript" | "typescript" | "sql" | "plaintext" |
 	template: `<div #editorRef class= "auto min-h-96 h-full w-full overflow-hidden"></div>`,
 	host: {
 		class:  "block min-h-96 h-full w-full",
-	}
+	},
+	styleUrl: "./editor.css",
 })
 export class Editor implements AfterViewInit, OnDestroy {
 	private monacoWorkerService = inject(MonacoService);

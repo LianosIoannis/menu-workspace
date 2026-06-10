@@ -7,6 +7,7 @@ import type { MenuItemModel } from "./menu-item.model";
 	selector: "menu-item",
 	imports: [FaIconComponent],
 	templateUrl: "./menu-item.html",
+	styleUrl: "../menu.css",
 })
 export class MenuItem {
 	menuItem = input.required<MenuItemModel>();
