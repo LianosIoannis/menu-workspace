@@ -18,10 +18,10 @@ export type EditorLanguage = "javascript" | "typescript" | "sql" | "plaintext" |
 @Component({
 	selector: "editor",
 	imports: [],
-	template: `<div #editorRef class="min-h-96 h-full w-full overflow-hidden"></div>`,
+	template: `<div #editorRef class= "auto min-h-96 h-full w-full overflow-hidden"></div>`,
 	host: {
-		class: "block min-h-96 h-full w-full",
-	},
+		class:  "block min-h-96 h-full w-full",
+	}
 })
 export class Editor implements AfterViewInit, OnDestroy {
 	private monacoWorkerService = inject(MonacoService);
