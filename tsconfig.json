@@ -8,6 +8,7 @@
     "noImplicitReturns": true,
     "paths": {
       "editor-lib": ["./dist/editor-lib"],
+      "form-lib": ["./dist/form-lib"],
       "menu-lib": ["./dist/menu-lib"]
     },
     "noFallthroughCasesInSwitch": true,
@@ -43,6 +44,12 @@
     },
     {
       "path": "./projects/editor-lib/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/form-lib/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/form-lib/tsconfig.spec.json"
     }
   ]
 }
