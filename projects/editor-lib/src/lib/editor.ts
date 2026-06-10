@@ -3,6 +3,7 @@ import {
 	Component,
 	type ElementRef,
 	effect,
+	inject,
 	input,
 	model,
 	type OnDestroy,
@@ -10,13 +11,14 @@ import {
 } from "@angular/core";
 import * as monaco from "monaco-editor";
 import { format } from "sql-formatter";
+import { MonacoWorker } from "./monaco-worker";
 
 export type editorLanguage = "javascript" | "typescript" | "sql" | "plaintext" | "json" | "css";
 
 @Component({
 	selector: "editor",
 	imports: [],
-	templateUrl: "./editor.html",
+	template: `<div #editorRef class="editor-surface"></div>`,
 	host: {
 		class: "block min-h-96",
 	},
@@ -37,20 +39,24 @@ export type editorLanguage = "javascript" | "typescript" | "sql" | "plaintext" |
 	],
 })
 export class Editor implements AfterViewInit, OnDestroy {
+	monacoWorkerService = inject(MonacoWorker);
 	editorRef = viewChild.required<ElementRef<HTMLDivElement>>("editorRef");
 	editor?: monaco.editor.IStandaloneCodeEditor;
+	editorChangeSubscription?: monaco.IDisposable;
 
 	value = model<string>("");
 	language = input<editorLanguage>("plaintext");
 
 	langEffect = effect(() => {
 		const editor = this.editor;
+		const language = this.language();
+
 		if (!editor) {
 			return;
 		}
 
 		const model = editor.getModel();
-		const language = this.language();
+
 		if (model) {
 			monaco.editor.setModelLanguage(model, language);
 		}
@@ -58,10 +64,11 @@ export class Editor implements AfterViewInit, OnDestroy {
 
 	valueEffect = effect(() => {
 		const editor = this.editor;
+		const value = this.value();
+
 		if (!editor) {
 			return;
 		}
-		const value = this.value();
 
 		if (value !== editor.getValue()) {
 			editor.setValue(value);
@@ -75,7 +82,9 @@ export class Editor implements AfterViewInit, OnDestroy {
 			return;
 		}
 
-		if (this.language() === "sql") {
+		const language = this.language();
+
+		if (language === "sql") {
 			const formatted = format(editor.getValue(), { language: "tsql" });
 			editor.setValue(formatted);
 			return;
@@ -84,43 +93,8 @@ export class Editor implements AfterViewInit, OnDestroy {
 		await editor.getAction("editor.action.formatDocument")?.run();
 	};
 
-	initializeMonaco() {
-		window.MonacoEnvironment = {
-			getWorker: (_: string, label: string) => {
-				const workerMap: Record<string, Worker> = {
-					json: new Worker(new URL("monaco-editor/esm/vs/language/json/json.worker.js", import.meta.url), {
-						type: "module",
-					}),
-					css: new Worker(new URL("monaco-editor/esm/vs/language/css/css.worker.js", import.meta.url), {
-						type: "module",
-					}),
-					scss: new Worker(new URL("monaco-editor/esm/vs/language/css/css.worker.js", import.meta.url), {
-						type: "module",
-					}),
-					less: new Worker(new URL("monaco-editor/esm/vs/language/css/css.worker.js", import.meta.url), {
-						type: "module",
-					}),
-					html: new Worker(new URL("monaco-editor/esm/vs/language/html/html.worker.js", import.meta.url), {
-						type: "module",
-					}),
-					typescript: new Worker(new URL("monaco-editor/esm/vs/language/typescript/ts.worker.js", import.meta.url), {
-						type: "module",
-					}),
-					javascript: new Worker(new URL("monaco-editor/esm/vs/language/typescript/ts.worker.js", import.meta.url), {
-						type: "module",
-					}),
-				};
-
-				return (
-					workerMap[label] ??
-					new Worker(new URL("monaco-editor/esm/vs/editor/editor.worker.js", import.meta.url), { type: "module" })
-				);
-			},
-		};
-	}
-
 	ngAfterViewInit() {
-		this.initializeMonaco();
+		this.monacoWorkerService.initialize();
 
 		this.editor = monaco.editor.create(this.editorRef().nativeElement, {
 			value: this.value(),
@@ -137,7 +111,7 @@ export class Editor implements AfterViewInit, OnDestroy {
 			run: this.formatCode,
 		});
 
-		this.editor.onDidChangeModelContent(() => {
+		this.editorChangeSubscription = this.editor.onDidChangeModelContent(() => {
 			if (!this.editor) {
 				return;
 			}
@@ -146,9 +120,8 @@ export class Editor implements AfterViewInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		const model = this.editor?.getModel();
-
+		this.editorChangeSubscription?.dispose();
 		this.editor?.dispose();
-		model?.dispose();
+		this.editor?.getModel()?.dispose();
 	}
 }
