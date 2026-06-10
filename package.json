@@ -7,6 +7,7 @@
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
+		"build:all":"npm run build:editor-lib && npm run build:menu-lib",
 		"build:editor-lib": "npm run build:editor-lib:styles && ng build editor-lib",
 		"build:editor-lib:styles": "npx @tailwindcss/cli -i projects/editor-lib/src/lib/editor.tw.css -o projects/editor-lib/src/lib/editor.css",
 		"build:menu-lib": "npm run build:menu-lib:styles && ng build menu-lib",

@@ -1,10 +1,5 @@
 /*! tailwindcss v4.3.0 | MIT License | https://tailwindcss.com */
 @layer theme, base, components, utilities;
-@layer theme {
-  :root, :host {
-    --spacing: 0.25rem;
-  }
-}
 @layer utilities {
   .block {
     display: block;
