@@ -103,6 +103,7 @@ export class Editor implements AfterViewInit, OnDestroy {
 			theme: "vs-dark",
 			automaticLayout: true,
 			minimap: { enabled: false },
+			ariaLabel: "Code editor",
 		});
 
 		this.editor.addAction({
