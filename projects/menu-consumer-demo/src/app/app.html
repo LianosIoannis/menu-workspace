@@ -21,35 +21,95 @@
 
 				<section class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
 					aria-labelledby="editor-demo-heading">
-					<div class="mb-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+					<div class="mb-4 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
 						<div class="flex flex-col gap-1">
 							<p class="text-sm font-medium text-slate-500">Editor library</p>
 							<h2 id="editor-demo-heading" class="text-xl font-semibold text-slate-950">Editor demo</h2>
 						</div>
 
-						<label class="flex flex-col gap-2 text-sm font-medium text-slate-700">
-							Language
-							<select
-								class="min-h-10 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 shadow-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/30"
-								[value]="editorLanguage()" (change)="changeEditorLanguage($event)">
-								@for (language of languageOptions; track language.value) {
-								<option [value]="language.value">{{ language.label }}</option>
-								}
-							</select>
-						</label>
+						<div class="flex flex-col gap-3 sm:flex-row sm:items-end">
+							<label class="flex min-w-56 flex-col gap-2 text-sm font-medium text-slate-700">
+								Primary language
+								<select
+									class="min-h-10 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 shadow-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/30"
+									[value]="editorLanguage()" (change)="changeEditorLanguage($event)">
+									@for (language of languageOptions; track language.value) {
+									<option [value]="language.value">{{ language.label }}</option>
+									}
+								</select>
+							</label>
+
+							<label class="flex min-w-64 flex-col gap-2 text-sm font-medium text-slate-700">
+								Height: {{ editorHeight() }}px
+								<input class="h-10 accent-blue-700" type="range" min="384" max="820" step="20"
+									[value]="editorHeight()" (input)="changeEditorHeight($event)" />
+							</label>
+
+							<label class="flex min-w-64 flex-col gap-2 text-sm font-medium text-slate-700">
+								Width: {{ editorWidth() }}px
+								<input class="h-10 accent-blue-700" type="range" min="360" max="960" step="20"
+									[value]="editorWidth()" (input)="changeEditorWidth($event)" />
+							</label>
+
+							<button type="button"
+								class="min-h-10 rounded-md bg-slate-950 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+								(click)="addEditor()">
+								Add editor
+							</button>
+						</div>
 					</div>
 
-					@defer {
-					<editor [(value)]="editorValue" [language]="editorLanguage()"></editor>
-					} @placeholder {
-					<div
-						class="flex min-h-96 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-sm font-medium text-slate-600">
-						Loading editor...
+					<div class="grid gap-5">
+						@for (editor of editors(); track editor.id) {
+						<section class="rounded-md border border-slate-200 bg-slate-50 p-4"
+							[attr.aria-labelledby]="'editor-panel-' + editor.id">
+							<div class="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+								<h3 [id]="'editor-panel-' + editor.id" class="text-base font-semibold text-slate-950">
+									{{ editor.title }}
+								</h3>
+
+								<div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+									<label class="flex min-w-44 flex-col gap-2 text-sm font-medium text-slate-700">
+										Language
+										<select
+											class="min-h-10 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 shadow-sm focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/30"
+											[value]="editor.language" (change)="changeDynamicEditorLanguage(editor.id, $event)">
+											@for (language of languageOptions; track language.value) {
+											<option [value]="language.value">{{ language.label }}</option>
+											}
+										</select>
+									</label>
+
+									<button type="button"
+										class="min-h-10 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+										(click)="removeEditor(editor.id)" [disabled]="editors().length === 1">
+										Remove
+									</button>
+								</div>
+							</div>
+
+							<div class="max-w-full overflow-x-auto pb-1">
+								<div class="resize overflow-auto rounded-md border border-slate-300 bg-slate-950"
+									[style.height.px]="editorHeight()" [style.width.px]="editorWidth()" [style.min-width.px]="320"
+									[style.max-width.%]="100">
+								@defer {
+								<editor
+									[value]="editor.value" (valueChange)="updateEditorValue(editor.id, $event)"
+									[language]="editor.language"></editor>
+								} @placeholder {
+								<div
+									class="flex h-full min-h-96 items-center justify-center bg-slate-50 text-sm font-medium text-slate-600">
+									Loading editor...
+								</div>
+								}
+								</div>
+							</div>
+						</section>
+						}
 					</div>
-					}
 
 					<div class="mt-4 rounded-md border border-slate-200 bg-slate-50 p-4">
-						<p class="text-sm font-medium text-slate-500">Current value</p>
+						<p class="text-sm font-medium text-slate-500">Primary editor value</p>
 						<pre
 							class="mt-2 max-h-56 overflow-auto whitespace-pre-wrap text-sm text-slate-900">{{ editorValue() }}</pre>
 					</div>

@@ -27,6 +27,8 @@ export type EditorLanguage = "javascript" | "typescript" | "sql" | "plaintext" |
 			:host {
 				display: block;
 				min-height: 24rem;
+				height: 100%;
+				width: 100%;
 			}
 
 			.editor-surface {
