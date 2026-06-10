@@ -18,9 +18,9 @@ export type EditorLanguage = "javascript" | "typescript" | "sql" | "plaintext" |
 @Component({
 	selector: "editor",
 	imports: [],
-	template: `<div #editorRef class= "auto min-h-96 h-full w-full overflow-hidden"></div>`,
+	template: `<div #editorRef class= "h-full w-full overflow-hidden"></div>`,
 	host: {
-		class:  "block min-h-96 h-full w-full",
+		class:  "block h-full w-full",
 	},
 	styleUrl: "./editor.css",
 })
