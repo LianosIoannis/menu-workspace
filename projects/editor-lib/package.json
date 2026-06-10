@@ -4,7 +4,8 @@
   "peerDependencies": {
     "@angular/common": "^22.0.0",
     "@angular/core": "^22.0.0",
-    "monaco-editor": "^0.55.1"
+    "monaco-editor": "^0.55.1",
+    "sql-formatter": "^15.8.1"
   },
   "dependencies": {
     "tslib": "^2.3.0"

@@ -11,9 +11,9 @@ import {
 } from "@angular/core";
 import * as monaco from "monaco-editor";
 import { format } from "sql-formatter";
-import { MonacoWorker } from "./monaco-worker";
+import { MonacoService } from "./monaco-service";
 
-export type editorLanguage = "javascript" | "typescript" | "sql" | "plaintext" | "json" | "css";
+export type EditorLanguage = "javascript" | "typescript" | "sql" | "plaintext" | "json" | "css";
 
 @Component({
 	selector: "editor",
@@ -39,15 +39,16 @@ export type editorLanguage = "javascript" | "typescript" | "sql" | "plaintext" |
 	],
 })
 export class Editor implements AfterViewInit, OnDestroy {
-	monacoWorkerService = inject(MonacoWorker);
-	editorRef = viewChild.required<ElementRef<HTMLDivElement>>("editorRef");
-	editor?: monaco.editor.IStandaloneCodeEditor;
-	editorChangeSubscription?: monaco.IDisposable;
+	private monacoWorkerService = inject(MonacoService);
+
+	private editorRef = viewChild.required<ElementRef<HTMLDivElement>>("editorRef");
+	private editor?: monaco.editor.IStandaloneCodeEditor;
+	private editorChangeSubscription?: monaco.IDisposable;
 
 	value = model<string>("");
-	language = input<editorLanguage>("plaintext");
+	language = input<EditorLanguage>("plaintext");
 
-	langEffect = effect(() => {
+	private langEffect = effect(() => {
 		const editor = this.editor;
 		const language = this.language();
 
@@ -62,7 +63,7 @@ export class Editor implements AfterViewInit, OnDestroy {
 		}
 	});
 
-	valueEffect = effect(() => {
+	private valueEffect = effect(() => {
 		const editor = this.editor;
 		const value = this.value();
 
@@ -75,7 +76,7 @@ export class Editor implements AfterViewInit, OnDestroy {
 		}
 	});
 
-	formatCode = async () => {
+	private readonly formatCode = async () => {
 		const editor = this.editor;
 
 		if (!editor) {
@@ -94,7 +95,7 @@ export class Editor implements AfterViewInit, OnDestroy {
 	};
 
 	ngAfterViewInit() {
-		this.monacoWorkerService.initialize();
+		this.monacoWorkerService.initializeWorkers();
 
 		this.editor = monaco.editor.create(this.editorRef().nativeElement, {
 			value: this.value(),
@@ -120,8 +121,10 @@ export class Editor implements AfterViewInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
+		this.langEffect.destroy();
+		this.valueEffect.destroy();
 		this.editorChangeSubscription?.dispose();
-		this.editor?.dispose();
 		this.editor?.getModel()?.dispose();
+		this.editor?.dispose();
 	}
 }

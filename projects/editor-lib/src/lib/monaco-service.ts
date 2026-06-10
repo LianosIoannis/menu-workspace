@@ -1,11 +1,11 @@
 import { Service } from "@angular/core";
 
 @Service()
-export class MonacoWorker {
-	private initialized = false;
+export class MonacoService {
+	private workersInitialized = false;
 
-	initialize() {
-		if (this.initialized) {
+	initializeWorkers() {
+		if (this.workersInitialized) {
 			return;
 		}
 
@@ -43,6 +43,6 @@ export class MonacoWorker {
 			},
 		};
 
-        this.initialized = true;
+        this.workersInitialized = true;
 	}
 }

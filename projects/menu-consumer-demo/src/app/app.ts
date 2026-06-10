@@ -1,5 +1,5 @@
 import { Component, signal } from "@angular/core";
-import { Editor, type editorLanguage } from "editor-lib";
+import { Editor, type EditorLanguage } from "editor-lib";
 import { Menu, type MenuItemModel } from "menu-lib";
 import { menuData } from "../menuData";
 
@@ -15,8 +15,8 @@ export class App {
 	protected readonly menuData = menuData;
 
 	protected readonly lastClicked = signal<string | null>(null);
-	protected readonly editorLanguage = signal<editorLanguage>("sql");
-	protected readonly languageOptions: readonly { value: editorLanguage; label: string }[] = [
+	protected readonly editorLanguage = signal<EditorLanguage>("sql");
+	protected readonly languageOptions: readonly { value: EditorLanguage; label: string }[] = [
 		{ value: "sql", label: "SQL" },
 		{ value: "typescript", label: "TypeScript" },
 		{ value: "javascript", label: "JavaScript" },
@@ -50,7 +50,7 @@ order by orders_count desc;`);
 	}
 
 	changeEditorLanguage(event: Event) {
-		const selectedLanguage = (event.target as HTMLSelectElement).value as editorLanguage;
+		const selectedLanguage = (event.target as HTMLSelectElement).value as EditorLanguage;
 		this.editorLanguage.set(selectedLanguage);
 	}
 }
