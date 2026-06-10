@@ -20,17 +20,10 @@ export type EditorLanguage = "javascript" | "typescript" | "sql" | "plaintext" |
 	imports: [],
 	template: `<div #editorRef class="editor-surface"></div>`,
 	host: {
-		class: "block min-h-96",
+		class: "block min-h-96 h-full w-full",
 	},
 	styles: [
 		`
-			:host {
-				display: block;
-				min-height: 24rem;
-				height: 100%;
-				width: 100%;
-			}
-
 			.editor-surface {
 				height: 100%;
 				min-height: 24rem;
