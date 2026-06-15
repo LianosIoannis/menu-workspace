@@ -1,0 +1,11 @@
+<input
+	[name]="name()"
+	[type]="type()"
+	[value]="value() ?? ''"
+	[placeholder]="placeholder()"
+	[disabled]="disabled()"
+	[readOnly]="readonly()"
+	[required]="required()"
+	(input)="updateValue($event)"
+	(blur)="markTouched()"
+/>
