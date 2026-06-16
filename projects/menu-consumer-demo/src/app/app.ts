@@ -1,6 +1,9 @@
+import { JsonPipe } from "@angular/common";
 import { Component, signal } from "@angular/core";
 import { Editor, type EditorLanguage } from "editor-lib";
+import { FormLib, type FormLibValue } from "form-lib";
 import { Menu, type MenuItemModel } from "menu-lib";
+import { formMockData } from "../form-mock-data";
 import { menuData } from "../menuData";
 
 type DemoEditor = {
@@ -12,7 +15,7 @@ type DemoEditor = {
 
 @Component({
 	selector: "app-root",
-	imports: [Editor, Menu],
+	imports: [Editor, FormLib, Menu, JsonPipe],
 	templateUrl: "./app.html",
 })
 export class App {
@@ -20,6 +23,8 @@ export class App {
 
 	// sample data passed to the library component
 	protected readonly menuData = menuData;
+	protected readonly formMockData = formMockData;
+	protected readonly lastFormSubmit = signal<FormLibValue | null>(null);
 
 	protected readonly lastClicked = signal<string | null>(null);
 	protected readonly editorLanguage = signal<EditorLanguage>("sql");
@@ -62,6 +67,11 @@ order by orders_count desc;`);
 
 	logoutClicked() {
 		console.log("logoutClicked");
+	}
+
+	formSubmitted(value: FormLibValue) {
+		console.log("formSubmitted", value);
+		this.lastFormSubmit.set(value);
 	}
 
 	profileClicked() {

@@ -20,6 +20,23 @@
 				</div>
 
 				<section class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
+					aria-labelledby="form-demo-heading">
+					<div class="mb-4 flex flex-col gap-1">
+						<p class="text-sm font-medium text-slate-500">Form library</p>
+						<h2 id="form-demo-heading" class="text-xl font-semibold text-slate-950">Form demo</h2>
+					</div>
+
+					<lib-form-lib [fields]="formMockData" submitLabel="Apply filters"
+						(formSubmit)="formSubmitted($event)" />
+
+					<div class="mt-4 rounded-md border border-slate-200 bg-slate-50 p-4">
+						<p class="text-sm font-medium text-slate-500">Last form submit</p>
+						<pre
+							class="mt-2 max-h-56 overflow-auto whitespace-pre-wrap text-sm text-slate-900">{{ lastFormSubmit() | json }}</pre>
+					</div>
+				</section>
+
+				<section class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
 					aria-labelledby="editor-demo-heading">
 					<div class="mb-4 flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
 						<div class="flex flex-col gap-1">
