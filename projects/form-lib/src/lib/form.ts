@@ -1,19 +1,19 @@
 import { Component, computed, input, linkedSignal, output } from "@angular/core";
 import {
 	disabled as disabledField,
+	type Field,
 	FormField,
-	form,
 	FormRoot,
+	form,
 	readonly as readonlyField,
 	required,
-	type Field,
 	type SchemaPath,
 } from "@angular/forms/signals";
+import type { InputField, InputFieldOption } from "./form.models";
 import { FormCheckbox } from "./form-checkbox/form-checkbox";
 import { FormCode } from "./form-code/form-code";
 import { FormDate } from "./form-date/form-date";
 import { FormInput } from "./form-input/form-input";
-import type { InputField, InputFieldOption } from "./form.models";
 import { FormSelect } from "./form-select/form-select";
 import { FormSelectMulti } from "./form-select-multi/form-select-multi";
 
@@ -25,7 +25,8 @@ type FormLibFieldModel = {
 	readonly operator: OperatorValue;
 	readonly value: InputValue;
 };
-type FormLibSchemaPath = SchemaPath<FormLibValue> & Record<string, { value: SchemaPath<InputValue>; operator: SchemaPath<OperatorValue> }>;
+type FormLibSchemaPath = SchemaPath<FormLibValue> &
+	Record<string, { value: SchemaPath<InputValue>; operator: SchemaPath<OperatorValue> }>;
 
 export interface FormLibFieldValue {
 	readonly operator: OperatorValue;
