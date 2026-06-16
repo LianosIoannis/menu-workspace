@@ -26,6 +26,14 @@ const inputValueSchema = v.union(
 	"Invalid input value",
 );
 
+const inputFieldOptionValueSchema = v.union([v.string(), v.number()], "Invalid option value");
+
+export const inputFieldOptionSchema = v.object({
+	label: v.string("Invalid option label"),
+	value: inputFieldOptionValueSchema,
+	disabled: v.optional(v.boolean("Invalid option disabled value")),
+});
+
 const stringOperatorSchema = v.picklist(
 	["equals", "notEquals", "contains", "notContains", "startsWith", "endsWith", "in", "notIn"],
 	"Invalid operator for string input type",
@@ -85,6 +93,8 @@ export const inputFieldSchema = v.pipe(
 		required: v.optional(v.boolean("Invalid required value")),
 		defaultValue: v.optional(inputValueSchema),
 		readonly: v.optional(v.boolean("Invalid readonly value")),
+		options: v.optional(v.array(inputFieldOptionSchema, "Invalid options array")),
+		multiple: v.optional(v.boolean("Invalid multiple value")),
 	}),
 	v.check((input) => {
 		const operatorSchema = operatorSchemaPerInputType[input.type];
@@ -107,6 +117,50 @@ export const inputFieldSchema = v.pipe(
 
 		return v.safeParse(valueSchema, input.defaultValue).success;
 	}, "Default value must match input type"),
+	v.check((input) => {
+		if (!input.multiple) {
+			return true;
+		}
+
+		return input.options !== undefined;
+	}, "Multiple fields must define options"),
+	v.check((input) => {
+		if (!input.options) {
+			return true;
+		}
+
+		return input.type === "string" || input.type === "number";
+	}, "Options are only supported for string and number input types"),
+	v.check((input) => {
+		if (!input.options) {
+			return true;
+		}
+
+		return input.options.every((option) => typeof option.value === input.type);
+	}, "Option values must match input type"),
+	v.check((input) => {
+		if (!input.options) {
+			return true;
+		}
+
+		const values = input.options.map((option) => option.value);
+		return new Set(values).size === values.length;
+	}, "Option values must be unique"),
+	v.check((input) => {
+		if (!input.multiple || input.defaultValue === undefined) {
+			return true;
+		}
+
+		return Array.isArray(input.defaultValue);
+	}, "Multiple fields must use an array default value"),
+	v.check((input) => {
+		if (input.multiple || !input.options || input.defaultValue === undefined) {
+			return true;
+		}
+
+		return !Array.isArray(input.defaultValue);
+	}, "Single option fields must use a scalar default value"),
 );
 
+export type InputFieldOption = v.InferOutput<typeof inputFieldOptionSchema>;
 export type InputField = v.InferOutput<typeof inputFieldSchema>;
