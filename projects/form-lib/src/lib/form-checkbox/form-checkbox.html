@@ -1,1 +1,10 @@
-<p>form-checkbox works!</p>
+<label class="inline-flex min-h-10 items-center gap-2 text-sm text-slate-950">
+	<input
+		class="size-4 rounded border-slate-300 text-blue-600 transition focus:ring-2 focus:ring-blue-600/20 disabled:cursor-not-allowed disabled:bg-slate-100"
+		[name]="name()" type="checkbox" [checked]="value()" [disabled]="disabled()" [readOnly]="readonly()"
+		[required]="required()" (change)="updateValue($event)" (blur)="markTouched()" />
+
+	@if (label()) {
+		<span [class.text-slate-500]="disabled()" [class.text-slate-600]="readonly()">{{ label() }}</span>
+	}
+</label>

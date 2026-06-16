@@ -1,1 +1,10 @@
-<p>form-select-multi works!</p>
+<select
+	class="min-h-32 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 transition outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500 invalid:border-red-600 invalid:focus:border-red-600 invalid:focus:ring-red-600/20"
+	[name]="name()" multiple [disabled]="disabled() || readonly()" [required]="required()" [size]="size()"
+	(change)="updateValue($event)" (blur)="markTouched()">
+	@for (option of options(); track $index) {
+		<option [value]="optionValue($index)" [selected]="isSelected(option)" [disabled]="option.disabled">
+			{{ option.label }}
+		</option>
+	}
+</select>
