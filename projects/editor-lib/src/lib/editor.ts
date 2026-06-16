@@ -7,6 +7,7 @@ import {
 	input,
 	model,
 	type OnDestroy,
+	output,
 	viewChild,
 } from "@angular/core";
 import * as monaco from "monaco-editor";
@@ -30,9 +31,12 @@ export class Editor implements AfterViewInit, OnDestroy {
 	private editorRef = viewChild.required<ElementRef<HTMLDivElement>>("editorRef");
 	private editor?: monaco.editor.IStandaloneCodeEditor;
 	private editorChangeSubscription?: monaco.IDisposable;
+	private editorBlurSubscription?: monaco.IDisposable;
 
 	value = model<string>("");
 	language = input<EditorLanguage>("plaintext");
+	readonly = input(false);
+	blur = output<void>();
 
 	private langEffect = effect(() => {
 		const editor = this.editor;
@@ -60,6 +64,17 @@ export class Editor implements AfterViewInit, OnDestroy {
 		if (value !== editor.getValue()) {
 			editor.setValue(value);
 		}
+	});
+
+	private readonlyEffect = effect(() => {
+		const editor = this.editor;
+		const readonly = this.readonly();
+
+		if (!editor) {
+			return;
+		}
+
+		editor.updateOptions({ readOnly: readonly });
 	});
 
 	private readonly formatCode = async () => {
@@ -90,6 +105,7 @@ export class Editor implements AfterViewInit, OnDestroy {
 			automaticLayout: true,
 			minimap: { enabled: false },
 			ariaLabel: "Code editor",
+			readOnly: this.readonly(),
 		});
 
 		this.editor.addAction({
@@ -105,12 +121,18 @@ export class Editor implements AfterViewInit, OnDestroy {
 			}
 			this.value.set(this.editor.getValue());
 		});
+
+		this.editorBlurSubscription = this.editor.onDidBlurEditorWidget(() => {
+			this.blur.emit();
+		});
 	}
 
 	ngOnDestroy() {
 		this.langEffect.destroy();
 		this.valueEffect.destroy();
+		this.readonlyEffect.destroy();
 		this.editorChangeSubscription?.dispose();
+		this.editorBlurSubscription?.dispose();
 		this.editor?.getModel()?.dispose();
 		this.editor?.dispose();
 	}

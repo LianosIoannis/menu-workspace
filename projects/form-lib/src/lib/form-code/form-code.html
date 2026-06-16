@@ -1,5 +1,6 @@
-<textarea
-	class="min-h-32 w-full resize-y rounded-md border border-slate-300 bg-white px-3 py-2 font-mono text-sm text-slate-950 transition outline-none placeholder:text-slate-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500 read-only:bg-slate-100 read-only:text-slate-600 invalid:border-red-600 invalid:focus:border-red-600 invalid:focus:ring-red-600/20"
-	[name]="name()" [value]="value() ?? ''" [placeholder]="placeholder()" [disabled]="disabled()"
-	[readOnly]="readonly()" [required]="required()" [rows]="rows()" [spellcheck]="spellcheck()"
-	(input)="updateValue($event)" (blur)="markTouched()"></textarea>
+<div class="min-h-32 w-full overflow-hidden rounded-md border border-slate-300 bg-slate-950 transition focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-600/20"
+	[class.border-red-600]="required() && !value()" [class.focus-within:border-red-600]="required() && !value()"
+	[class.focus-within:ring-red-600]="required() && !value()" [style.min-height.rem]="rows() * 1.5">
+	<editor [value]="value() ?? ''" [language]="language()" [readonly]="disabled() || readonly()"
+		(valueChange)="updateValue($event)" (blur)="markTouched()" />
+</div>
