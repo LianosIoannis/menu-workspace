@@ -16,7 +16,6 @@ export class FormCode implements FormValueControl<string | null> {
 	readonly touch = output<void>();
 
 	readonly language = input<EditorLanguage>("plaintext");
-	readonly rows = input(8);
 
 	protected updateValue(value: string): void {
 		this.value.set(value || null);
