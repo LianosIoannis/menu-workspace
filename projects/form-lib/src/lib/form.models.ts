@@ -82,7 +82,6 @@ const allOperatorSchema = v.union(
 	"Invalid operator",
 );
 
-
 export const inputFieldSchema = v.pipe(
 	v.object({
 		name: v.string("Invalid input name"),

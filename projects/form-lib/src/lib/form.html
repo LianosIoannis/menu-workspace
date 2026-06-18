@@ -1,31 +1,44 @@
 <form class="grid gap-4" [formRoot]="formTree" (submit)="submitForm()">
-    @for (field of fields(); track field.name) {
+  @for (field of fields(); track field.name) {
     <div class="grid gap-2">
-        <label class="text-sm font-medium text-slate-950" [attr.for]="field.name">{{ field.label }}</label>
+      <label class="text-sm font-medium text-slate-950" [attr.for]="field.name">{{
+        field.label
+      }}</label>
 
-        <div class="grid gap-2 md:grid-cols-[minmax(10rem,14rem)_1fr]">
-            <lib-form-select [formField]="operatorField(field)" [options]="operatorOptions(field)" />
+      <div class="grid gap-2 md:grid-cols-[minmax(10rem,14rem)_1fr]">
+        <lib-form-select [formField]="operatorField(field)" [options]="operatorOptions(field)" />
 
-            @if (isRangeOperator(field)) {
-            <div class="grid gap-2 md:grid-cols-2">
-                <lib-form-field-value-control [field]="field" [control]="valueField(field)"
-                    [codeLanguage]="codeLanguage(field)" />
-                <lib-form-field-value-control [field]="field" [control]="valueToField(field)"
-                    [codeLanguage]="codeLanguage(field)" />
-            </div>
-            } @else {
-            <lib-form-field-value-control [field]="field" [control]="valueField(field)"
-                [codeLanguage]="codeLanguage(field)" />
-            }
-        </div>
+        @if (isRangeOperator(field)) {
+          <div class="grid gap-2 md:grid-cols-2">
+            <lib-form-field-value-control
+              [field]="field"
+              [control]="valueField(field)"
+              [codeLanguage]="codeLanguage(field)"
+            />
+            <lib-form-field-value-control
+              [field]="field"
+              [control]="valueToField(field)"
+              [codeLanguage]="codeLanguage(field)"
+            />
+          </div>
+        } @else {
+          <lib-form-field-value-control
+            [field]="field"
+            [control]="valueField(field)"
+            [codeLanguage]="codeLanguage(field)"
+          />
+        }
+      </div>
     </div>
-    }
+  }
 
-    <div class="flex justify-end">
-        <button
-            class="min-h-10 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 focus:ring-2 focus:ring-blue-600/20 focus:outline-none disabled:cursor-not-allowed disabled:bg-slate-300"
-            type="submit" [disabled]="disabled()">
-            {{ submitLabel() }}
-        </button>
-    </div>
+  <div class="flex justify-end">
+    <button
+      class="min-h-10 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 focus:ring-2 focus:ring-blue-600/20 focus:outline-none disabled:cursor-not-allowed disabled:bg-slate-300"
+      type="submit"
+      [disabled]="disabled()"
+    >
+      {{ submitLabel() }}
+    </button>
+  </div>
 </form>

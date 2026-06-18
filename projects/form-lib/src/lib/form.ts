@@ -10,8 +10,8 @@ import {
 	type SchemaPath,
 } from "@angular/forms/signals";
 import type { EditorLanguage } from "editor-lib";
-import { FormFieldValueControl } from "./form-field-value-control/form-field-value-control";
 import type { InputField, InputFieldOption } from "./form.models";
+import { FormFieldValueControl } from "./form-field-value-control/form-field-value-control";
 import { FormSelect } from "./form-select/form-select";
 
 type InputValue = string | number | boolean | readonly string[] | readonly number[] | null;
@@ -25,7 +25,10 @@ type FormLibFieldModel = {
 };
 type FormLibModel = Record<string, FormLibFieldModel>;
 type FormLibSchemaPath = SchemaPath<FormLibValue> &
-	Record<string, { value: SchemaPath<InputValue>; valueTo: SchemaPath<InputValue>; operator: SchemaPath<OperatorValue> }>;
+	Record<
+		string,
+		{ value: SchemaPath<InputValue>; valueTo: SchemaPath<InputValue>; operator: SchemaPath<OperatorValue> }
+	>;
 
 export interface FormLibFieldValue {
 	readonly operator: OperatorValue;
@@ -136,7 +139,12 @@ export class FormLib {
 		return field.defaultOperator ?? field.operators[0] ?? null;
 	}
 
-	private resolveValue(field: InputField, previousValue: InputValue | undefined, operator: OperatorValue, index: 0 | 1): InputValue {
+	private resolveValue(
+		field: InputField,
+		previousValue: InputValue | undefined,
+		operator: OperatorValue,
+		index: 0 | 1,
+	): InputValue {
 		if (previousValue !== undefined && this.valueMatchesField(field, previousValue)) {
 			return previousValue;
 		}

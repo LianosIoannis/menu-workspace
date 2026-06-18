@@ -1,14 +1,14 @@
 {
-  "name": "editor-lib",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "^22.0.0",
-    "@angular/core": "^22.0.0",
-    "monaco-editor": "^0.55.1",
-    "sql-formatter": "^15.8.1"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "sideEffects": false
+	"name": "editor-lib",
+	"version": "0.0.1",
+	"peerDependencies": {
+		"@angular/common": "^22.0.0",
+		"@angular/core": "^22.0.0",
+		"monaco-editor": "^0.55.1",
+		"sql-formatter": "^15.8.1"
+	},
+	"dependencies": {
+		"tslib": "^2.3.0"
+	},
+	"sideEffects": false
 }

@@ -1,13 +1,16 @@
 @if (field().options && field().multiple) {
-	<lib-form-select-multi [formField]="multiSelectValueField()" [options]="options()" />
+  <lib-form-select-multi [formField]="multiSelectValueField()" [options]="options()" />
 } @else if (field().options) {
-	<lib-form-select [formField]="selectValueField()" [options]="options()" />
-} @else if (field().type === "boolean") {
-	<lib-form-checkbox [formField]="booleanValueField()" [label]="field().label" />
-} @else if (field().type === "date" || field().type === "datetime" || field().type === "time") {
-	<lib-form-date [formField]="textValueField()" [type]="dateType()" />
-} @else if (field().type === "code") {
-	<lib-form-code [formField]="textValueField()" [language]="codeLanguage()" />
+  <lib-form-select [formField]="selectValueField()" [options]="options()" />
+} @else if (field().type === 'boolean') {
+  <lib-form-checkbox [formField]="booleanValueField()" [label]="field().label" />
+} @else if (field().type === 'date' || field().type === 'datetime' || field().type === 'time') {
+  <lib-form-date [formField]="textValueField()" [type]="dateType()" />
+} @else if (field().type === 'code') {
+  <lib-form-code [formField]="textValueField()" [language]="codeLanguage()" />
 } @else {
-	<lib-form-input [formField]="inputValueField()" [type]="field().type === 'number' ? 'number' : 'text'" />
+  <lib-form-input
+    [formField]="inputValueField()"
+    [type]="field().type === 'number' ? 'number' : 'text'"
+  />
 }

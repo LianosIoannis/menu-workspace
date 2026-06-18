@@ -43,6 +43,6 @@ export class MonacoService {
 			},
 		};
 
-        this.workersInitialized = true;
+		this.workersInitialized = true;
 	}
 }

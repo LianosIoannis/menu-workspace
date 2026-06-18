@@ -21,7 +21,7 @@ export type EditorLanguage = "javascript" | "typescript" | "sql" | "plaintext" |
 	imports: [],
 	template: `<div #editorRef class= "h-full w-full overflow-hidden"></div>`,
 	host: {
-		class:  "block h-full w-full",
+		class: "block h-full w-full",
 	},
 	styleUrl: "./editor.css",
 })
