@@ -295,6 +295,11 @@
       color: var(--color-slate-500);
     }
   }
+  .md\:grid-cols-2 {
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
   .md\:grid-cols-\[minmax\(10rem\,14rem\)_1fr\] {
     @media (width >= 48rem) {
       grid-template-columns: minmax(10rem,14rem) 1fr;

@@ -9,35 +9,34 @@ import {
 	required,
 	type SchemaPath,
 } from "@angular/forms/signals";
+import type { EditorLanguage } from "editor-lib";
+import { FormFieldValueControl } from "./form-field-value-control/form-field-value-control";
 import type { InputField, InputFieldOption } from "./form.models";
-import { FormCheckbox } from "./form-checkbox/form-checkbox";
-import { FormCode } from "./form-code/form-code";
-import { FormDate } from "./form-date/form-date";
-import { FormInput } from "./form-input/form-input";
 import { FormSelect } from "./form-select/form-select";
-import { FormSelectMulti } from "./form-select-multi/form-select-multi";
 
 type InputValue = string | number | boolean | readonly string[] | readonly number[] | null;
-type SelectValue = string | number | null;
-type MultiSelectValue = readonly (string | number)[];
+type RangeInputValue = readonly [InputValue, InputValue];
+type FormLibOutputValue = InputValue | RangeInputValue;
 type OperatorValue = InputField["operators"][number] | null;
 type FormLibFieldModel = {
 	readonly operator: OperatorValue;
 	readonly value: InputValue;
+	readonly valueTo: InputValue;
 };
+type FormLibModel = Record<string, FormLibFieldModel>;
 type FormLibSchemaPath = SchemaPath<FormLibValue> &
-	Record<string, { value: SchemaPath<InputValue>; operator: SchemaPath<OperatorValue> }>;
+	Record<string, { value: SchemaPath<InputValue>; valueTo: SchemaPath<InputValue>; operator: SchemaPath<OperatorValue> }>;
 
 export interface FormLibFieldValue {
 	readonly operator: OperatorValue;
-	readonly value: InputValue;
+	readonly value: FormLibOutputValue;
 }
 
 export type FormLibValue = Record<string, FormLibFieldValue>;
 
 @Component({
 	selector: "lib-form-lib",
-	imports: [FormRoot, FormField, FormCheckbox, FormCode, FormDate, FormInput, FormSelect, FormSelectMulti],
+	imports: [FormRoot, FormField, FormFieldValueControl, FormSelect],
 	templateUrl: "./form.html",
 	styleUrl: "./form.css",
 })
@@ -49,7 +48,7 @@ export class FormLib {
 
 	private readonly model = linkedSignal({
 		source: this.fields,
-		computation: (fields, previous): FormLibValue => this.createModel(fields, previous?.value),
+		computation: (fields, previous): FormLibModel => this.createModel(fields, previous?.value),
 	});
 
 	protected readonly formTree = form(this.model, (path) => {
@@ -62,12 +61,14 @@ export class FormLib {
 
 			disabledField(fieldPath.value, { when: () => this.disabled() });
 			readonlyField(fieldPath.value, { when: () => field.readonly ?? false });
+			disabledField(fieldPath.valueTo, { when: () => this.disabled() });
+			readonlyField(fieldPath.valueTo, { when: () => field.readonly ?? false });
 			disabledField(fieldPath.operator, { when: () => this.disabled() });
 			readonlyField(fieldPath.operator, { when: () => field.readonly ?? false });
 		}
 	});
 
-	protected readonly value = computed(() => this.formTree().value());
+	protected readonly value = computed(() => this.toOutputValue(this.formTree().value()));
 
 	protected operatorField(field: InputField): Field<OperatorValue> {
 		return this.formTree[field.name].operator as Field<OperatorValue>;
@@ -77,24 +78,8 @@ export class FormLib {
 		return this.formTree[field.name].value as Field<InputValue>;
 	}
 
-	protected selectValueField(field: InputField): Field<SelectValue> {
-		return this.valueField(field) as Field<SelectValue>;
-	}
-
-	protected multiSelectValueField(field: InputField): Field<MultiSelectValue> {
-		return this.valueField(field) as Field<MultiSelectValue>;
-	}
-
-	protected booleanValueField(field: InputField): Field<boolean> {
-		return this.valueField(field) as Field<boolean>;
-	}
-
-	protected textValueField(field: InputField): Field<string | null> {
-		return this.valueField(field) as Field<string | null>;
-	}
-
-	protected inputValueField(field: InputField): Field<string | number | null> {
-		return this.valueField(field) as Field<string | number | null>;
+	protected valueToField(field: InputField): Field<InputValue> {
+		return this.formTree[field.name].valueTo as Field<InputValue>;
 	}
 
 	protected operatorOptions(field: InputField): readonly InputFieldOption[] {
@@ -104,19 +89,7 @@ export class FormLib {
 		}));
 	}
 
-	protected dateType(field: InputField): "date" | "datetime-local" | "time" {
-		if (field.type === "datetime") {
-			return "datetime-local";
-		}
-
-		if (field.type === "time") {
-			return "time";
-		}
-
-		return "date";
-	}
-
-	protected codeLanguage(field: InputField): "javascript" | "typescript" | "sql" | "plaintext" | "json" | "css" {
+	protected codeLanguage(field: InputField): EditorLanguage {
 		const operator = this.model()[field.name]?.operator;
 
 		if (
@@ -133,19 +106,24 @@ export class FormLib {
 		return "plaintext";
 	}
 
+	protected isRangeOperator(field: InputField): boolean {
+		return this.isRangeOperatorValue(this.model()[field.name]?.operator);
+	}
+
 	protected submitForm(): void {
 		this.formSubmit.emit(this.value());
 	}
 
-	private createModel(fields: readonly InputField[], previous?: FormLibValue): FormLibValue {
-		return fields.reduce<FormLibValue>((model, field) => {
+	private createModel(fields: readonly InputField[], previous?: FormLibModel): FormLibModel {
+		return fields.reduce<FormLibModel>((model, field) => {
 			const previousField = previous?.[field.name];
 			const operator = this.resolveOperator(field, previousField?.operator);
-			const value = this.resolveValue(field, previousField?.value);
+			const value = this.resolveValue(field, previousField?.value, operator, 0);
+			const valueTo = this.resolveValue(field, previousField?.valueTo, operator, 1);
 
 			return {
 				...model,
-				[field.name]: { operator, value },
+				[field.name]: { operator, value, valueTo },
 			};
 		}, {});
 	}
@@ -158,16 +136,28 @@ export class FormLib {
 		return field.defaultOperator ?? field.operators[0] ?? null;
 	}
 
-	private resolveValue(field: InputField, previousValue?: InputValue): InputValue {
+	private resolveValue(field: InputField, previousValue: InputValue | undefined, operator: OperatorValue, index: 0 | 1): InputValue {
 		if (previousValue !== undefined && this.valueMatchesField(field, previousValue)) {
 			return previousValue;
 		}
 
 		if (field.defaultValue !== undefined) {
+			if (this.isRangeOperatorValue(operator) && Array.isArray(field.defaultValue)) {
+				const defaultValue = field.defaultValue[index];
+
+				if (defaultValue !== undefined && this.valueMatchesField(field, defaultValue)) {
+					return defaultValue;
+				}
+			}
+
+			if (index === 1) {
+				return null;
+			}
+
 			return field.defaultValue as InputValue;
 		}
 
-		if (field.multiple) {
+		if (index === 0 && field.multiple) {
 			return [];
 		}
 
@@ -210,7 +200,27 @@ export class FormLib {
 		return value.replace(/[A-Z]/g, (match) => ` ${match}`).replace(/^./, (match) => match.toUpperCase());
 	}
 
-	private schemaField(path: SchemaPath<FormLibValue>, name: string): FormLibSchemaPath[string] {
+	private toOutputValue(model: FormLibModel): FormLibValue {
+		return Object.entries(model).reduce<FormLibValue>((output, [name, field]) => {
+			const value: FormLibOutputValue = this.isRangeOperatorValue(field.operator)
+				? [field.value, field.valueTo]
+				: field.value;
+
+			return {
+				...output,
+				[name]: {
+					operator: field.operator,
+					value,
+				},
+			};
+		}, {});
+	}
+
+	private isRangeOperatorValue(operator: OperatorValue): boolean {
+		return operator === "between" || operator === "notBetween";
+	}
+
+	private schemaField(path: SchemaPath<FormLibModel>, name: string): FormLibSchemaPath[string] {
 		return (path as FormLibSchemaPath)[name];
 	}
 }
