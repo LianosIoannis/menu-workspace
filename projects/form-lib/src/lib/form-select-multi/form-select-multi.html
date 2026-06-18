@@ -1,6 +1,6 @@
 <ng-select
 	class="mt-1 block text-sm" bindLabel="label" bindValue="value" [items]="options()" [multiple]="true"
-	[closeOnSelect]="false" [clearable]="false" [searchable]="false" [readonly]="readonly()" [disabled]="disabled()"
+	[closeOnSelect]="false" [clearable]="false" [searchable]="true" [clearSearchOnAdd]="false" [readonly]="readonly()" [disabled]="disabled()"
 	[name]="name()" [ngModel]="value()" (ngModelChange)="updateValue($event)" (blur)="markTouched()"
 	placeholder="Select options">
 	<ng-template ng-multi-label-tmp>
