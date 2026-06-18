@@ -1,5 +1,7 @@
 import { Component, input, model, output } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import type { FormValueControl } from "@angular/forms/signals";
+import { NgMultiLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from "@ng-select/ng-select";
 
 type OptionValue = string | number;
 type Option = {
@@ -10,7 +12,7 @@ type Option = {
 
 @Component({
 	selector: "lib-form-select-multi",
-	imports: [],
+	imports: [FormsModule, NgMultiLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent],
 	templateUrl: "./form-select-multi.html",
 })
 export class FormSelectMulti implements FormValueControl<readonly OptionValue[]> {
@@ -22,28 +24,27 @@ export class FormSelectMulti implements FormValueControl<readonly OptionValue[]>
 	readonly touch = output<void>();
 
 	readonly options = input<readonly Option[]>([]);
-	readonly size = input(5);
 
-	protected optionValue(index: number): string {
-		return String(index);
+	protected selectedLabel(): string {
+		const selectedOptions = this.options().filter((option) => this.isSelected(option));
+
+		if (selectedOptions.length === 0) {
+			return "Select options";
+		}
+
+		if (selectedOptions.length === 1) {
+			return selectedOptions[0].label;
+		}
+
+		return `${selectedOptions.length} selected`;
 	}
 
 	protected isSelected(option: Option): boolean {
 		return this.value().includes(option.value);
 	}
 
-	protected updateValue(event: Event): void {
-		const selectElement = event.target;
-
-		if (!(selectElement instanceof HTMLSelectElement) || this.readonly()) {
-			return;
-		}
-
-		const selectedValues = Array.from(selectElement.selectedOptions)
-			.map((selectedOption) => this.options()[Number(selectedOption.value)]?.value)
-			.filter((value): value is OptionValue => value !== undefined);
-
-		this.value.set(selectedValues);
+	protected updateValue(value: readonly OptionValue[] | null): void {
+		this.value.set(value ?? []);
 	}
 
 	protected markTouched(): void {
