@@ -1,4 +1,4 @@
-import { Component, input, model, output } from "@angular/core";
+import { Component, input, model, output, ViewEncapsulation } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import type { FormValueControl } from "@angular/forms/signals";
 import { NgMultiLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from "@ng-select/ng-select";
@@ -14,6 +14,8 @@ type Option = {
 	selector: "lib-form-select-multi",
 	imports: [FormsModule, NgMultiLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent],
 	templateUrl: "./form-select-multi.html",
+	styleUrl: "./form-select-multi.css",
+	encapsulation: ViewEncapsulation.None,
 })
 export class FormSelectMulti implements FormValueControl<readonly OptionValue[]> {
 	readonly value = model.required<readonly OptionValue[]>();
