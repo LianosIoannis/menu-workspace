@@ -3,7 +3,7 @@
   bindLabel="label"
   bindValue="value"
   [items]="options()"
-  [clearable]="!required()"
+  [clearable]="allowClear() && !required()"
   [searchable]="true"
   [readonly]="readonly()"
   [disabled]="disabled()"

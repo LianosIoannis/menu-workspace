@@ -27,9 +27,14 @@ export class FormSelect implements FormValueControl<OptionValue | null> {
 
 	readonly options = input<readonly Option[]>([]);
 	readonly placeholder = input("");
+	readonly allowClear = input(true);
 
 	protected updateValue(value: OptionValue | null): void {
 		if (this.readonly()) {
+			return;
+		}
+
+		if (value === null && !this.allowClear()) {
 			return;
 		}
 

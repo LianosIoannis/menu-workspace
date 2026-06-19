@@ -6,7 +6,11 @@
       }}</label>
 
       <div class="grid gap-2 md:grid-cols-[minmax(10rem,14rem)_1fr]">
-        <lib-form-select [formField]="operatorField(field)" [options]="operatorOptions(field)" />
+        <lib-form-select
+          [formField]="operatorField(field)"
+          [options]="operatorOptions(field)"
+          [allowClear]="false"
+        />
 
         @if (isRangeOperator(field)) {
           <div class="grid gap-2 md:grid-cols-2">

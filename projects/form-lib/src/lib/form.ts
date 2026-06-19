@@ -67,6 +67,7 @@ export class FormLib {
 			readonlyField(fieldPath.value, { when: () => field.readonly ?? false });
 			disabledField(fieldPath.valueTo, { when: () => this.disabled() });
 			readonlyField(fieldPath.valueTo, { when: () => field.readonly ?? false });
+			required(fieldPath.operator);
 			disabledField(fieldPath.operator, { when: () => this.disabled() });
 			readonlyField(fieldPath.operator, { when: () => field.readonly ?? false });
 		}
