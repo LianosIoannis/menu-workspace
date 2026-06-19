@@ -74,18 +74,19 @@ export class FormLib {
 	});
 
 	protected readonly value = computed(() => this.toOutputValue(this.formTree().value()));
-	protected readonly operatorOptionsByField = computed(() =>
-		this.fields().reduce<OperatorOptionsByField>(
-			(options, field) => ({
-				...options,
-				[field.name]: field.operators.map((operator) => ({
-					label: this.formatLabel(operator),
-					value: operator,
-				})),
-			}),
-			{},
-		),
-	);
+
+	protected readonly operatorOptionsByField = computed(() => {
+		const options = {} as OperatorOptionsByField;
+
+		for (const field of this.fields()) {
+			options[field.name] = field.operators.map((operator) => ({
+				label: this.formatLabel(operator),
+				value: operator,
+			}));
+		}
+
+		return options;
+	});
 
 	protected operatorField(field: InputField): Field<OperatorValue> {
 		return this.formTree[field.name].operator as Field<OperatorValue>;
@@ -129,17 +130,18 @@ export class FormLib {
 	}
 
 	private createModel(fields: readonly InputField[], previous?: FormLibModel): FormLibModel {
-		return fields.reduce<FormLibModel>((model, field) => {
+		const model: FormLibModel = {};
+
+		for (const field of fields) {
 			const previousField = previous?.[field.name];
 			const operator = this.resolveOperator(field, previousField?.operator);
 			const value = this.resolveValue(field, previousField?.value, operator, 0);
 			const valueTo = this.resolveValue(field, previousField?.valueTo, operator, 1);
 
-			return {
-				...model,
-				[field.name]: { operator, value, valueTo },
-			};
-		}, {});
+			model[field.name] = { operator, value, valueTo };
+		}
+
+		return model;
 	}
 
 	private resolveOperator(field: InputField, previousOperator?: OperatorValue): OperatorValue {
@@ -220,19 +222,20 @@ export class FormLib {
 	}
 
 	private toOutputValue(model: FormLibModel): FormLibValue {
-		return Object.entries(model).reduce<FormLibValue>((output, [name, field]) => {
+		const output: FormLibValue = {};
+
+		for (const [name, field] of Object.entries(model)) {
 			const value: FormLibOutputValue = this.isRangeOperatorValue(field.operator)
 				? [field.value, field.valueTo]
 				: field.value;
 
-			return {
-				...output,
-				[name]: {
-					operator: field.operator,
-					value,
-				},
+			output[name] = {
+				operator: field.operator,
+				value,
 			};
-		}, {});
+		}
+
+		return output;
 	}
 
 	private isRangeOperatorValue(operator: OperatorValue): boolean {
