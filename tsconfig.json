@@ -9,7 +9,8 @@
     "paths": {
       "editor-lib": ["./dist/editor-lib"],
       "form-lib": ["./dist/form-lib"],
-      "menu-lib": ["./dist/menu-lib"]
+      "menu-lib": ["./dist/menu-lib"],
+      "table-lib": ["./dist/table-lib"]
     },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
@@ -50,6 +51,12 @@
     },
     {
       "path": "./projects/form-lib/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/table-lib/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/table-lib/tsconfig.spec.json"
     }
   ]
 }

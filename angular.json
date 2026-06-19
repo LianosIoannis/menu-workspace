@@ -149,6 +149,32 @@
           }
         }
       }
+    },
+    "table-lib": {
+      "projectType": "library",
+      "root": "projects/table-lib",
+      "sourceRoot": "projects/table-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/table-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/table-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/table-lib/tsconfig.spec.json"
+          }
+        }
+      }
     }
   }
 }
