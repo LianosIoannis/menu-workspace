@@ -1,3 +1,4 @@
+lib-form-select .ng-select .ng-select-container,
 lib-form-select-multi .ng-select .ng-select-container {
   min-height: 2.75rem;
   border-color: var(--color-slate-200);
@@ -7,6 +8,7 @@ lib-form-select-multi .ng-select .ng-select-container {
     0 1px 2px -1px color-mix(in oklab, var(--color-slate-200) 100%, transparent);
 }
 
+lib-form-select .ng-select .ng-select-container:hover,
 lib-form-select-multi .ng-select .ng-select-container:hover {
   border-color: var(--color-slate-300);
   box-shadow:
@@ -14,21 +16,24 @@ lib-form-select-multi .ng-select .ng-select-container:hover {
     0 1px 2px -1px color-mix(in oklab, var(--color-slate-200) 100%, transparent);
 }
 
+lib-form-select .ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container,
 lib-form-select-multi .ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
   border-color: var(--color-indigo-500);
   box-shadow: 0 0 0 4px var(--color-indigo-100);
 }
 
+lib-form-select .ng-select.ng-select-opened > .ng-select-container,
 lib-form-select-multi .ng-select.ng-select-opened > .ng-select-container {
   border-color: var(--color-indigo-500);
   border-radius: var(--radius-lg);
 }
 
+lib-form-select .ng-select .ng-select-container .ng-value-container,
+lib-form-select-multi .ng-select .ng-select-container .ng-value-container {
+  padding-left: 0.75rem;
+}
+
 lib-form-select-multi .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
   align-items: center;
   padding-top: 0;
-}
-
-lib-form-select-multi .ng-select .ng-select-container .ng-value-container {
-  padding-left: 0.75rem;
 }

@@ -12,6 +12,7 @@ import { FormSelectMulti } from "../form-select-multi/form-select-multi";
 type InputValue = string | number | boolean | readonly string[] | readonly number[] | null;
 type SelectValue = string | number | null;
 type MultiSelectValue = readonly (string | number)[];
+type ControlKind = "multi-select" | "select" | "checkbox" | "date" | "code" | "input";
 
 @Component({
 	selector: "lib-form-field-value-control",
@@ -45,6 +46,32 @@ export class FormFieldValueControl {
 
 	protected options(): readonly InputFieldOption[] {
 		return this.field().options ?? [];
+	}
+
+	protected controlKind(): ControlKind {
+		const field = this.field();
+
+		if (field.options && field.multiple) {
+			return "multi-select";
+		}
+
+		if (field.options) {
+			return "select";
+		}
+
+		if (field.type === "boolean") {
+			return "checkbox";
+		}
+
+		if (field.type === "date" || field.type === "datetime" || field.type === "time") {
+			return "date";
+		}
+
+		if (field.type === "code") {
+			return "code";
+		}
+
+		return "input";
 	}
 
 	protected dateType(): "date" | "datetime-local" | "time" {

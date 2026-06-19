@@ -1,5 +1,7 @@
-import { Component, input, model, output } from "@angular/core";
+import { Component, input, model, output, ViewEncapsulation } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import type { FormValueControl } from "@angular/forms/signals";
+import { NgSelectComponent } from "@ng-select/ng-select";
 
 type OptionValue = string | number;
 type Option = {
@@ -10,8 +12,10 @@ type Option = {
 
 @Component({
 	selector: "lib-form-select",
-	imports: [],
+	imports: [FormsModule, NgSelectComponent],
 	templateUrl: "./form-select.html",
+	styleUrl: "../form-ng-select.css",
+	encapsulation: ViewEncapsulation.None,
 })
 export class FormSelect implements FormValueControl<OptionValue | null> {
 	readonly value = model.required<OptionValue | null>();
@@ -24,29 +28,12 @@ export class FormSelect implements FormValueControl<OptionValue | null> {
 	readonly options = input<readonly Option[]>([]);
 	readonly placeholder = input("");
 
-	protected optionValue(index: number): string {
-		return String(index);
-	}
-
-	protected selectedOptionValue(): string {
-		const selectedIndex = this.options().findIndex((option) => option.value === this.value());
-		return selectedIndex === -1 ? "" : String(selectedIndex);
-	}
-
-	protected updateValue(event: Event): void {
-		const selectElement = event.target;
-
-		if (!(selectElement instanceof HTMLSelectElement) || this.readonly()) {
+	protected updateValue(value: OptionValue | null): void {
+		if (this.readonly()) {
 			return;
 		}
 
-		if (selectElement.value === "") {
-			this.value.set(null);
-			return;
-		}
-
-		const selectedIndex = Number(selectElement.value);
-		this.value.set(this.options()[selectedIndex]?.value ?? null);
+		this.value.set(value);
 	}
 
 	protected markTouched(): void {

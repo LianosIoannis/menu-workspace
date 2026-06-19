@@ -14,7 +14,7 @@ type Option = {
 	selector: "lib-form-select-multi",
 	imports: [FormsModule, NgMultiLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent],
 	templateUrl: "./form-select-multi.html",
-	styleUrl: "./form-select-multi.css",
+	styleUrl: "../form-ng-select.css",
 	encapsulation: ViewEncapsulation.None,
 })
 export class FormSelectMulti implements FormValueControl<readonly OptionValue[]> {
