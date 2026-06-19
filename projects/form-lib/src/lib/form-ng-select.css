@@ -33,6 +33,15 @@ lib-form-select-multi .ng-select .ng-select-container .ng-value-container {
   padding-left: 0.75rem;
 }
 
+lib-form-select .ng-select.ng-select-single .ng-select-container {
+  height: 2.75rem;
+}
+
+lib-form-select .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  top: 0.625rem;
+  padding-left: 0.75rem;
+}
+
 lib-form-select-multi .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
   align-items: center;
   padding-top: 0;
