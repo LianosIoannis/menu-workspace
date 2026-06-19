@@ -24,6 +24,7 @@ type FormLibFieldModel = {
 	readonly valueTo: InputValue;
 };
 type FormLibModel = Record<string, FormLibFieldModel>;
+type OperatorOptionsByField = Record<string, readonly InputFieldOption[]>;
 type FormLibSchemaPath = SchemaPath<FormLibValue> &
 	Record<
 		string,
@@ -72,6 +73,18 @@ export class FormLib {
 	});
 
 	protected readonly value = computed(() => this.toOutputValue(this.formTree().value()));
+	protected readonly operatorOptionsByField = computed(() =>
+		this.fields().reduce<OperatorOptionsByField>(
+			(options, field) => ({
+				...options,
+				[field.name]: field.operators.map((operator) => ({
+					label: this.formatLabel(operator),
+					value: operator,
+				})),
+			}),
+			{},
+		),
+	);
 
 	protected operatorField(field: InputField): Field<OperatorValue> {
 		return this.formTree[field.name].operator as Field<OperatorValue>;
@@ -86,10 +99,7 @@ export class FormLib {
 	}
 
 	protected operatorOptions(field: InputField): readonly InputFieldOption[] {
-		return field.operators.map((operator) => ({
-			label: this.formatLabel(operator),
-			value: operator,
-		}));
+		return this.operatorOptionsByField()[field.name] ?? [];
 	}
 
 	protected codeLanguage(field: InputField): EditorLanguage {
